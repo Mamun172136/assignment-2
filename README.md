@@ -27,7 +27,7 @@
 # const userInfo = userInstance.getInfo();
 # console.log(userInfo); // Output: "Username: John, Email: john@example.com"
 
-#  How do you use comparison operators like "$ne," "$gt," "$lt," "$gte," and "$lte" in MongoDB queries? Provide examples to illustrate their usage.
+#  questtion 4 : How do you use comparison operators like "$ne," "$gt," "$lt," "$gte," and "$lte" in MongoDB queries? Provide examples to illustrate their usage.
 # ans 4: In MongoDB queries, comparison operators like "$ne" (not equal), "$gt" (greater than), "$lt" (less than), "$gte" (greater than or equal to), and "$lte" (less than or equal to) are used to filter documents based on field values. Here are examples illustrating their usage:
 
 # db.products.find({ price: { $ne: 20 } });
