@@ -20,15 +20,32 @@ const bookSchema = new Schema<IBook, BookModel>({
   price: { type: String, required: true },
 });
 
-bookSchema.static("booksByRating", async function booksByRating(): Promise<
-  IBook[]
-> {
+// bookSchema.static("booksByRating", async function booksByRating(): Promise<
+//   IBook[]
+// > {
+//   const books = await this.find({
+//     rating: { $gte: 4 },
+//   });
+
+//   return books;
+// });
+
+bookSchema.statics.booksByRating = async function (): Promise<IBook[]> {
   const books = await this.find({
     rating: { $gte: 4 },
   });
 
-  return books;
-});
+  // Update the category based on the rating
+  const booksWithCategory = books.map((book) => {
+    if (book.rating >= 4.5) {
+      return { ...book.toObject(), category: "BestSeller" };
+    } else {
+      return { ...book.toObject(), category: "Popular" };
+    }
+  });
+
+  return booksWithCategory;
+};
 
 const Book = model<IBook, BookModel>("Book", bookSchema);
 export default Book;
