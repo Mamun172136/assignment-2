@@ -24,7 +24,7 @@ bookSchema.static("booksByRating", async function booksByRating(): Promise<
   IBook[]
 > {
   const books = await this.find({
-    rating: { $gte: 4.8 },
+    rating: { $gte: 4 },
   });
 
   return books;
