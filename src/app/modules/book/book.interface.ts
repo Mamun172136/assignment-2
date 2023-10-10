@@ -9,6 +9,7 @@ export interface IBook {
   reviews: [{ user: string; comment: string }];
   rating: number;
   price: string;
+  category?: string; // Add "?" to make it optional
 }
 
 export interface BookModel extends Model<IBook> {

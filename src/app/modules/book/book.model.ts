@@ -18,6 +18,7 @@ const bookSchema = new Schema<IBook, BookModel>({
   ],
   rating: { type: Number, required: true },
   price: { type: String, required: true },
+  category: { type: String },
 });
 
 // bookSchema.static("booksByRating", async function booksByRating(): Promise<
@@ -36,15 +37,22 @@ bookSchema.statics.booksByRating = async function (): Promise<IBook[]> {
   });
 
   // Update the category based on the rating
-  const booksWithCategory = books.map((book) => {
-    if (book.rating >= 4.5) {
-      return { ...book.toObject(), category: "BestSeller" };
-    } else {
-      return { ...book.toObject(), category: "Popular" };
-    }
-  });
 
-  return booksWithCategory;
+  // Update the category based on the rating
+  for (const book of books) {
+    if (book.rating >= 4.5) {
+      book.category = "BestSeller";
+    } else {
+      book.category = "Popular";
+    }
+
+    // Save the updated document back to the database
+    await this.findByIdAndUpdate(book._id, {
+      $set: { category: book.category },
+    });
+  }
+
+  return books;
 };
 
 const Book = model<IBook, BookModel>("Book", bookSchema);
